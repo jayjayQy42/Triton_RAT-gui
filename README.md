@@ -56,7 +56,7 @@ $ Download pyinstaller from https://github.com/pyinstaller/pyinstaller
 # Delete that 
 
 # also i'm recomending you to install and upgrade setuptools and pip
-pip install --upgrade setuptools pip
+$ pip install --upgrade setuptools pip
 # if you don't do this, problems may arise
 
 # Download requiremets.txt
