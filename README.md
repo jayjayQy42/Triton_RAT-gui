@@ -76,6 +76,7 @@ $ pyinstaller --onefile --noconsole --uac-admin --hidden-import telebot --hidden
 
 
 # wait for building exe
+# !BOT PASSWORD IS: acd
 
 $ run exe and bot started! 
 
