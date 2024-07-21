@@ -82,6 +82,13 @@ $ run exe and bot started!
 
 
 ```
+<h1 align="left">If you want to avoid scanning some antiviruses you can make that⬇️</h1>
+For example more online scanners also most popular virustotal's max allowed file size 650 MB.
+<h5>I wrote a python app that will help you to change your file's size for ex: from 109 to 750 mb </h5>
+
+<h3>Download app: https://github.com/WhiteeRabbit/fake_file_resizer/</h3>
+<a href="https://ibb.co/Bzw91qZ"><img src="https://i.ibb.co/gj6xnzT/23.png" alt="23" border="0" /></a>
+<h4>Download here: https://github.com/WhiteeRabbit/fake_file_resizer/</h4>
 
 ## You can use:
 
