@@ -195,11 +195,15 @@ Antiviruses, seeing the file size that it is large, will stupidly not check it! 
 
 
 
-## Antivirus check (with help of fake_file_resizer) ##
+## Antivirus check (with help of fake_file_resizer)😎 ##
 
 ![Снимок экрана (24)](https://github.com/user-attachments/assets/715a1384-30ae-43ea-bbb2-3d4b66cb8cee)
 
-
+## Triton_Rat V2 update features: ##
+- **New interface and desing**
+- **Added more than 10 new functions(also keylogger,metadata ,pc info and etc...)**
+- **Added: minimaze ,maximize ,rotate monitor ,metadata ,keylogger, block/unblock user input ,better information about pc (from bios to battery) and etc... ☺️**
+- **Fixed bugs**
 
 
 
