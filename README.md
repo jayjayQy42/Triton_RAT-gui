@@ -195,7 +195,7 @@ Antiviruses, seeing the file size that it is large, will stupidly not check it! 
 
 
 
-## Antivirus check ##
+## Antivirus check (with help of fake_file_resizer) ##
 
 ![Снимок экрана (24)](https://github.com/user-attachments/assets/715a1384-30ae-43ea-bbb2-3d4b66cb8cee)
 
