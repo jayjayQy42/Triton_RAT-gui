@@ -94,7 +94,7 @@ Antiviruses, seeing the file size that it is large, will stupidly not check it! 
 <h3>I wrote a python app that will help you to change your file's size for ex: from 100 mb to 750 mb. </h3>
 <h3>With help of this app you can make your file's size as you wanted!(it works on all systems)</h3>
 <h3>Download app: https://github.com/WhiteeRabbit/fake_file_resizer/</h3>
-<a href="https://ibb.co/Bzw91qZ"><img src="https://i.ibb.co/gj6xnzT/23.png" alt="23" border="0" /></a>
+<a href="https://ibb.co/qWKpdkM"><img src="https://i.ibb.co/VQRTt2W/25.png" alt="23" border="0" /></a>
 <h4>Download here: https://github.com/WhiteeRabbit/fake_file_resizer/</h4>
 
 ## You can use:
