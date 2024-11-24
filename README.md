@@ -193,7 +193,7 @@ Antiviruses, seeing the file size that it is large, will stupidly not check it! 
 
 ## Antivirus check ##
 
-![Снимок экрана (21)](https://github.com/WhiteeRabbit/Triton_RAT/assets/143087729/178186bb-aada-4e7b-bf6f-1e751675d6e4)
+![Снимок экрана (24)](https://github.com/user-attachments/assets/715a1384-30ae-43ea-bbb2-3d4b66cb8cee)
 
 
 
