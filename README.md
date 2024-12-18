@@ -115,6 +115,7 @@ Antiviruses, seeing the file size that it is large, will stupidly not check it! 
     - ⚙️ **/start** - Start the program
     - ⚙️ **/help** - Help with commands
     - 🔌 **/addstartup** - Add autostart
+    - 📁 **/filepath** - Shows the script's full path
     - ⌨️ **/keylogger** - Start keylogger
     - ⛔ **/stopkeylogger** - Stop keylogger
     - 👟 **/run [filepath]** - Run file
