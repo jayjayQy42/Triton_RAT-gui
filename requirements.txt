@@ -11,5 +11,4 @@ wave
 browser-cookie3
 pyttsx3
 pycryptodomex
-Crypto
 pynput
