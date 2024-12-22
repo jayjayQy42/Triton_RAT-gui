@@ -4,7 +4,6 @@ pyautogui
 opencv-python
 simplejson
 pywin32
-pycryptodome
 numpy
 pyaudio
 wave
