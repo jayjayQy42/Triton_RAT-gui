@@ -8,10 +8,11 @@
   <h1>Triton_Remote_Administration_Tool</h1>
 <img src="https://i.ibb.co/hVTH6L5/TRITON.png" alt="TRITON" border="0">
   
-  <h2 align="center">Hi 👋, I'm WhiteeRabbit</h2>
+  <h2 align="center">Hi 👋, I'm WhiteeRabbit and jayjay </h2>
   
   
-  <h3 align="center">I wrote RAT in python that works with telegram!</h3>
+  <h3 align="center">whiteerabbit wrote RAT in python that works with telegram!
+  i added a dediacted gui for it so simply do this!</h3>
 
 
   <h3>The best rat that works with telegram!</h3>
