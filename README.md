@@ -12,7 +12,7 @@
   
   
   <h3 align="center">whiteerabbit wrote RAT in python that works with telegram!
-  i added a dediacted gui for it so simply do this!</h3>
+  i added a dediacted gui for it so simply do this! To download click Releases Tab!!</h3>
 
 
   <h3>The best rat that works with telegram!</h3>
